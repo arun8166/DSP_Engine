@@ -1,0 +1,12 @@
+node trem tremolo rate=6 depth=0.6 wave=triangle spread=90
+node flange flanger rate=0.2 depth=2 delay=2.5 feedback=0.7 mix=0.5
+node vib vibrato rate=5.5 depth=1.5
+node ring ringmod rate=330 depth=0.35
+node gate gate threshold=-45 ratio=20 attack=1 release=120
+node lim limiter ceiling=-1
+
+chain in gate trem flange vib ring lim out
+
+at 2.0 trem rate 2
+at 4.0 flange feedback -0.6
+at 6.0 ring depth 0

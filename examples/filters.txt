@@ -1,0 +1,16 @@
+node fir_lp fir type=lowpass freq=4000 taps=127 window=blackman
+node fir_bp fir type=bandpass freq=300 freq2=3400 taps=255 window=hamming
+node butter iir type=lowpass freq=4000 order=8
+node notch iir type=notch freq=1000 q=8
+node analog tf domain=s b=1 a=1,2.6131,3.4142,2.6131,1 freq=2500
+node smooth tf b=0.1 a=1,-0.9
+node spectrum analyzer file=filters_spectrum.csv
+
+chain in fir_bp notch analog spectrum out
+
+measure fir_lp fir_lowpass_response.csv
+measure fir_bp fir_bandpass_response.csv
+measure butter butterworth8_response.csv
+measure notch notch_response.csv
+measure analog analog_butterworth4_response.csv
+measure smooth onepole_response.csv

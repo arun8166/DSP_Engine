@@ -1,0 +1,16 @@
+bits 24
+
+node hp iir type=highpass freq=35 order=4
+node eq eq bands=lowshelf:110:2.5:0.7,peak:350:-2:1.0,peak:3200:1.5:1.2,highshelf:11000:3:0.7
+node comp compressor threshold=-20 ratio=3 knee=6 attack=8 release=150 makeup=4
+node lim limiter ceiling=-1 release=60
+node meter analyzer file=mastering_spectrum.csv size=4096
+
+chain in hp eq comp lim meter out
+
+at 4.0 eq gain4 6
+at 8.0 eq gain4 3
+at 6.0 comp threshold -26
+
+measure eq eq_response.csv
+measure hp highpass_response.csv
